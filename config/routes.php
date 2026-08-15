@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Routes configuration.
  *
@@ -29,6 +30,7 @@ use Cake\Routing\RouteBuilder;
  * So you can use `$this` to reference the application class instance
  * if required.
  */
+
 return function (RouteBuilder $routes): void {
     /*
      * The default class to use for all routes
@@ -76,6 +78,11 @@ return function (RouteBuilder $routes): void {
          * See https://book.cakephp.org/5/en/development/routing.html#fallbacks-method for more information
          */
 
+        $builder->connect(
+            '/reviews/{id}',
+            ['controller' => 'Reviews', 'action' => 'view']
+        )->setPass(['id']);
+
         $builder->connect('/login', [
             'controller' => 'Users',
             'action' => 'login',
@@ -92,15 +99,17 @@ return function (RouteBuilder $routes): void {
         ]);
 
         $builder->connect(
-          '/movies/{id}',[
-              'controller' => 'Movies',
-              'action' => 'view',
+            '/movies/{id}',
+            [
+                'controller' => 'Movies',
+                'action' => 'view',
             ]
-        )->setPass(['id']);;
+        )->setPass(['id']);
 
         // api for users
         $builder->connect(
-            '/users',[
+            '/users',
+            [
                 'controller' => 'Users',
                 'action' => 'index',
             ]

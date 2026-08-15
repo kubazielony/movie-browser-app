@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,12 +17,10 @@
         body {
             font-family: Arial, sans-serif;
             background:
-                radial-gradient(
-                    circle at 50% 0%,
+                radial-gradient(circle at 50% 0%,
                     #252525 0%,
                     #111111 40%,
-                    #070707 80%
-                );
+                    #070707 80%);
             color: #f5f5f5;
             min-height: 100vh;
         }
@@ -129,11 +128,9 @@
             justify-content: center;
             border-radius: 8px;
             background:
-                linear-gradient(
-                    145deg,
+                linear-gradient(145deg,
                     #383838,
-                    #171717
-                );
+                    #171717);
             border: 1px solid #3d3d3d;
             color: #777777;
             font-size: 70px;
@@ -182,7 +179,8 @@
             border: 1px solid #303030;
             border-radius: 10px;
             background: #141414;
-            width: fit-content;
+            width: 100%;
+            max-width: 600px;
         }
 
         .rating-title {
@@ -194,6 +192,7 @@
         .stars {
             display: flex;
             gap: 3px;
+            flex-wrap: wrap;
         }
 
         .star {
@@ -220,6 +219,85 @@
             margin-top: 10px;
             color: #888888;
             font-size: 14px;
+        }
+
+        .review-input {
+            display: block;
+            width: 100%;
+            min-height: 100px;
+            margin-top: 20px;
+            padding: 12px;
+            resize: vertical;
+
+            color: #f5f5f5;
+            background: #0d0d0d;
+            border: 1px solid #303030;
+            border-radius: 6px;
+
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .review-input:focus {
+            outline: none;
+            border-color: #555555;
+        }
+
+        .review-submit {
+            display: inline-block;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        .reviews {
+            margin-top: 40px;
+            padding: 35px;
+            background: rgba(16, 16, 16, 0.95);
+            border: 1px solid #303030;
+            border-radius: 12px;
+        }
+
+        .reviews-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .review {
+            padding: 20px;
+            background: #141414;
+            border: 1px solid #303030;
+            border-radius: 8px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .review-user {
+            color: #eeeeee;
+        }
+
+        .review-rating {
+            color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .review-description {
+            color: #b5b5b5;
+            line-height: 1.6;
+        }
+
+        .no-reviews {
+            color: #888888;
         }
 
         @media (max-width: 800px) {
@@ -285,158 +363,248 @@
 
 <body>
 
-<nav class="navbar">
+    <nav class="navbar">
 
-    <a href="/" class="logo">
-        <span>🎬</span> Movie Browser
-    </a>
+        <a href="/" class="logo">
+            <span>🎬</span> Movie Browser
+        </a>
 
-    <div class="nav-links">
+        <div class="nav-links">
 
-        <?php if ($user): ?>
+            <?php if ($user): ?>
 
-            <span class="welcome">
-                Welcome,
-                <span class="username">
-                    <?= h($user['username']) ?>
+                <span class="welcome">
+                    Welcome,
+                    <span class="username">
+                        <?= h($user['username']) ?>
+                    </span>
                 </span>
-            </span>
 
-            <a href="/profile" class="button">
-                Profile
-            </a>
+                <a href="/profile" class="button">
+                    Profile
+                </a>
 
-            <a href="/logout" class="button button-primary">
-                Log out
-            </a>
+                <a href="/logout" class="button button-primary">
+                    Log out
+                </a>
 
-        <?php else: ?>
+            <?php else: ?>
 
-            <a href="/login" class="button">
-                Log in
-            </a>
+                <a href="/login" class="button">
+                    Log in
+                </a>
 
-            <a href="/register" class="button button-primary">
-                Sign up
-            </a>
+                <a href="/register" class="button button-primary">
+                    Sign up
+                </a>
 
-        <?php endif; ?>
+            <?php endif; ?>
 
-    </div>
-
-</nav>
-
-<main class="container">
-
-    <a href="/movies" class="back-link">
-        ← Back to movies
-    </a>
-
-    <section class="movie">
-
-        <div class="poster">
-            🎬
         </div>
 
-        <div class="movie-content">
+    </nav>
 
-            <h1 class="movie-title">
-                <?= h($movie->title) ?>
-            </h1>
+    <main class="container">
 
-            <div class="movie-meta">
+        <a href="/movies" class="back-link">
+            ← Back to movies
+        </a>
 
-                <?php if (!empty($movie->year)): ?>
-                    <span><?= h($movie->year) ?></span>
-                <?php endif; ?>
+        <section class="movie">
 
-                <?php if (!empty($movie->genre)): ?>
-                    <span><?= h($movie->genre) ?></span>
-                <?php endif; ?>
+            <div class="poster">
+                🎬
+            </div>
 
-                <?php if (!empty($movie->duration)): ?>
-                    <span><?= h($movie->duration) ?> min</span>
+            <div class="movie-content">
+
+                <h1 class="movie-title">
+                    <?= h($movie->title) ?>
+                </h1>
+
+                <div class="movie-meta">
+
+                    <?php if (!empty($movie->year)): ?>
+                        <span><?= h($movie->year) ?></span>
+                    <?php endif; ?>
+
+                    <?php if (!empty($movie->genre)): ?>
+                        <span><?= h($movie->genre) ?></span>
+                    <?php endif; ?>
+
+                    <?php if (!empty($movie->duration)): ?>
+                        <span><?= h($movie->duration) ?> min</span>
+                    <?php endif; ?>
+
+                </div>
+
+                <p class="description">
+                    <?= h($movie->description ?? 'No description available.') ?>
+                </p>
+
+                <?php if ($user): ?>
+
+                    <div class="rating-box">
+
+                        <div class="rating-title">
+                            Rate this movie
+                        </div>
+
+                        <?= $this->Form->create(null, [
+                            'url' => [
+                                'controller' => 'Movies',
+                                'action' => 'review',
+                                $movie->id,
+                            ],
+                            'method' => 'post',
+                            'id' => 'review-form',
+                        ]) ?>
+
+                        <div class="stars" id="stars">
+
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+
+                                <button
+                                    type="button"
+                                    class="star"
+                                    data-rating="<?= $i ?>">★</button>
+
+                            <?php endfor; ?>
+
+                        </div>
+
+                        <div class="rating-value" id="rating-value">
+                            No rating selected
+                        </div>
+
+                        <textarea
+                            name="description"
+                            id="review-description"
+                            class="review-input"
+                            placeholder="Write your review..."
+                            required></textarea>
+
+                        <input
+                            type="hidden"
+                            name="rating"
+                            id="rating-input"
+                            value="0">
+
+                        <button
+                            type="submit"
+                            class="button button-primary review-submit">
+                            Submit review
+                        </button>
+
+                        <?= $this->Form->end() ?>
+
+                    </div>
+
                 <?php endif; ?>
 
             </div>
 
-            <p class="description">
-                <?= h($movie->description ?? 'No description available.') ?>
-            </p>
+        </section>
 
-            <div class="rating-box">
+        <section class="reviews">
 
-                <div class="rating-title">
-                    Rate this movie
+            <h2 class="reviews-title">
+                Reviews
+            </h2>
+
+            <?php if ($reviews->isEmpty()): ?>
+
+                <p class="no-reviews">
+                    No reviews yet.
+                </p>
+
+            <?php else: ?>
+
+                <div class="reviews-list">
+
+                    <?php foreach ($reviews as $review): ?>
+
+                        <article class="review">
+
+                            <div class="review-header">
+
+                                <strong class="review-user">
+                                    <?= h($review->user->username) ?>
+                                </strong>
+
+                                <span class="review-rating">
+                                    ⭐ <?= h($review->rating) ?>
+                                </span>
+
+                            </div>
+
+                            <p class="review-description">
+                                <?= h($review->description) ?>
+                            </p>
+
+                        </article>
+
+                    <?php endforeach; ?>
+
                 </div>
 
-                <div class="stars" id="stars">
+            <?php endif; ?>
 
-                    <button class="star" data-rating="1">★</button>
-                    <button class="star" data-rating="2">★</button>
-                    <button class="star" data-rating="3">★</button>
-                    <button class="star" data-rating="4">★</button>
-                    <button class="star" data-rating="5">★</button>
-                    <button class="star" data-rating="6">★</button>
-                    <button class="star" data-rating="7">★</button>
-                    <button class="star" data-rating="8">★</button>
-                    <button class="star" data-rating="9">★</button>
-                    <button class="star" data-rating="10">★</button>
+        </section>
 
-                </div>
+    </main>
 
-                <div class="rating-value" id="rating-value">
-                    No rating selected
-                </div>
+    <script>
+        const stars = document.querySelectorAll('.star');
+        const ratingValue = document.getElementById('rating-value');
+        const ratingInput = document.getElementById('rating-input');
+        const reviewForm = document.getElementById('review-form');
 
-            </div>
+        let selectedRating = 0;
 
-        </div>
+        stars.forEach((star) => {
 
-    </section>
+            star.addEventListener('click', () => {
 
-</main>
+                selectedRating = Number(star.dataset.rating);
 
-<script>
-    const stars = document.querySelectorAll('.star');
-    const ratingValue = document.getElementById('rating-value');
+                ratingInput.value = selectedRating;
 
-    let selectedRating = 0;
+                stars.forEach((item) => {
 
-    stars.forEach((star) => {
+                    const rating = Number(item.dataset.rating);
 
-        star.addEventListener('click', () => {
+                    item.classList.toggle(
+                        'active',
+                        rating <= selectedRating
+                    );
 
-            selectedRating = Number(star.dataset.rating);
+                });
 
-            stars.forEach((item) => {
-
-                const rating = Number(item.dataset.rating);
-
-                item.classList.toggle(
-                    'active',
-                    rating <= selectedRating
-                );
+                ratingValue.textContent =
+                    `Your rating: ${selectedRating}/10`;
 
             });
 
-            ratingValue.textContent =
-                `Your rating: ${selectedRating}/10`;
-
-            /*
-             * Later:
-             *
-             * fetch('/api/movies/<?= h($movie->id) ?>/rating', {
-             *     method: 'POST',
-             *     body: JSON.stringify({
-             *         rating: selectedRating
-             *     })
-             * });
-             */
         });
 
-    });
-</script>
+        if (reviewForm) {
+
+            reviewForm.addEventListener('submit', (event) => {
+
+                if (selectedRating === 0) {
+
+                    event.preventDefault();
+
+                    alert('Please select a rating.');
+
+                }
+
+            });
+
+        }
+    </script>
 
 </body>
+
 </html>

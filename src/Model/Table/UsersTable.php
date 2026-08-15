@@ -13,6 +13,10 @@ class UsersTable extends Table
 
         $this->setTable('users');
         $this->setPrimaryKey('id');
+
+        $this->hasMany('Reviews', [
+            'foreignKey' => 'user_id',
+        ]);
     }
 
     public function validationDefault(Validator $validator): Validator

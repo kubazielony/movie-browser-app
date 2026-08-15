@@ -4,17 +4,19 @@ namespace App\Model\Table;
 
 use Cake\ORM\Table;
 
-class MoviesTable extends Table
+class ReviewsTable extends Table
 {
     public function initialize(array $config): void
     {
         parent::initialize($config);
 
-        $this->setTable('movies');
-        $this->setDisplayField('title');
+        $this->setTable('reviews');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Reviews', [
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+        ]);
+        $this->belongsTo('Movies', [
             'foreignKey' => 'movie_id',
         ]);
     }

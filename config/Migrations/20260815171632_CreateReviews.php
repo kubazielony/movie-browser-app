@@ -1,21 +1,20 @@
 <?php
+
 declare(strict_types=1);
 
 use Migrations\BaseMigration;
 
 class CreateReviews extends BaseMigration
 {
-    /**
-     * Change Method.
-     *
-     * More information on this method is available here:
-     * https://book.cakephp.org/migrations/5/guides/writing-migrations/migration-methods.html#the-change-method
-     *
-     * @return void
-     */
     public function change(): void
     {
         $table = $this->table('reviews');
-        $table->create();
+
+        $table
+            ->addColumn('user_id', 'integer')
+            ->addColumn('movie_id', 'integer')
+            ->addColumn('rating', 'integer')
+            ->addColumn('description', 'text')
+            ->create();
     }
 }
