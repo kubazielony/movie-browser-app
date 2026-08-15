@@ -45,6 +45,11 @@ class PagesController extends AppController
      */
     public function display(string ...$path): ?Response
     {
+
+        $user = $this->request->getSession()->read('Auth.user');
+
+        $this->set('user', $user);
+
         if (!$path) {
             return $this->redirect('/');
         }

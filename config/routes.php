@@ -75,6 +75,38 @@ return function (RouteBuilder $routes): void {
          * It is NOT recommended to use fallback routes after your initial prototyping phase!
          * See https://book.cakephp.org/5/en/development/routing.html#fallbacks-method for more information
          */
+
+        $builder->connect('/login', [
+            'controller' => 'Users',
+            'action' => 'login',
+        ]);
+
+        $builder->connect('/logout', [
+            'controller' => 'Users',
+            'action' => 'logout',
+        ]);
+
+        $builder->connect('/register', [
+            'controller' => 'Users',
+            'action' => 'register',
+        ]);
+
+        $builder->connect(
+          '/movies/{id}',[
+              'controller' => 'Movies',
+              'action' => 'view',
+            ]
+        )->setPass(['id']);;
+
+        // api for users
+        $builder->connect(
+            '/users',[
+                'controller' => 'Users',
+                'action' => 'index',
+            ]
+        );
+
+        // api for movies
         $builder->prefix('api', function (RouteBuilder $routes): void {
             $routes->setExtensions(['json']);
 
