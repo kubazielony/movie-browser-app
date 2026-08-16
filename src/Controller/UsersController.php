@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 
-class UsersController extends AppController{
+class UsersController extends AppController
+{
     public function index()
     {
         $this->request->allowMethod(['get']);
@@ -27,7 +28,8 @@ class UsersController extends AppController{
         ]);
     }
 
-    public function register(){
+    public function register()
+    {
         $users = $this->fetchTable('Users');
 
         if ($this->request->is('post')) {
@@ -48,7 +50,8 @@ class UsersController extends AppController{
         }
     }
 
-    public function login() {
+    public function login()
+    {
         $users = $this->fetchTable('Users');
 
         if ($this->request->is('post')) {
@@ -80,5 +83,50 @@ class UsersController extends AppController{
         $this->request->getSession()->delete('Auth.user');
 
         return $this->redirect('/');
+    }
+
+    public function profile(string $username)
+    {
+        $authUser = $this->request->getSession()->read('Auth.user');
+
+        if (!$authUser) {
+            return $this->redirect([
+                'controller' => 'Users',
+                'action' => 'login',
+            ]);
+        }
+
+        $users = $this->fetchTable('Users');
+
+        $user = $users
+            ->find()
+            ->where([
+                'Users.username' => $username,
+            ])
+            ->first();
+
+        if (!$user) {
+            throw new \Cake\Http\Exception\NotFoundException(
+                'User not found'
+            );
+        }
+
+        $reviews = $this->fetchTable('Reviews')
+            ->find()
+            ->where([
+                'Reviews.user_id' => $user->id,
+            ])
+            ->contain([
+                'Movies',
+            ])
+            ->orderBy([
+                'Reviews.id' => 'DESC',
+            ])
+            ->all();
+
+        $this->set([
+            'user' => $user,
+            'reviews' => $reviews,
+        ]);
     }
 }

@@ -418,7 +418,7 @@
                     </span>
                 </span>
 
-                <a href="/profile" class="button">
+                <a href="/profile/<?= h($user['username']) ?>" class="button">
                     Profile
                 </a>
 
@@ -484,7 +484,7 @@
                         <div class="movie-details">
 
                             <span>
-                                <?= h($movie->year ?? '') ?>
+                                <?= h($movie->release_year ?? '') ?>
                             </span>
 
                             <span class="rating">

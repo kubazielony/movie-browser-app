@@ -388,7 +388,7 @@
                     </span>
                 </span>
 
-                <a href="/profile" class="button">
+                <a href="/profile/<?= h($user['username']) ?>" class="button">
                     Profile
                 </a>
 
@@ -436,8 +436,8 @@
 
                 <div class="movie-meta">
 
-                    <?php if (!empty($movie->year)): ?>
-                        <span><?= h($movie->year) ?></span>
+                    <?php if (!empty($movie->release_year)): ?>
+                        <span><?= h($movie->release_year) ?></span>
                     <?php endif; ?>
 
                     <?php if (!empty($movie->genre)): ?>

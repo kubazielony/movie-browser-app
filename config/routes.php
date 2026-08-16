@@ -79,6 +79,14 @@ return function (RouteBuilder $routes): void {
          */
 
         $builder->connect(
+            'profile/{username}',
+            [
+                'controller' => 'Users',
+                'action' => 'profile'
+            ]
+        )->setPass(['username']);
+
+        $builder->connect(
             '/reviews/{id}',
             ['controller' => 'Reviews', 'action' => 'view']
         )->setPass(['id']);
