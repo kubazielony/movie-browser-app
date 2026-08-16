@@ -7,13 +7,20 @@ use App\Controller\AppController;
 
 class MoviesController extends AppController
 {
-    public function index(): void {
+    public function index(): void
+    {
         $this->request->allowMethod(['get']);
         $movies = $this->fetchTable('Movies')
             ->find()
             ->all();
 
         $user = $this->request->getSession()->read('Auth.user');
+
+        $reviewsTable = $this->fetchTable('Reviews');
+
+        foreach ($movies as $movie) {
+            $movie->rating = $reviewsTable->getAverageRating($movie->id);
+        }
 
         $this->set([
             'movies' => $movies,
@@ -28,11 +35,17 @@ class MoviesController extends AppController
 
         $movie = $this->fetchTable('Movies')->get($id);
 
-        $reviews = $this->fetchTable('Reviews')
+        $reviewsTable = $this->fetchTable('Reviews');
+
+        $reviews = $reviewsTable
             ->find()
-            ->where(['movie_id' => $id])
+            ->where([
+                'movie_id' => $id,
+            ])
             ->contain(['Users'])
             ->all();
+
+        $movie->rating = $reviewsTable->getAverageRating($movie->id);
 
         $user = $this->request->getSession()->read('Auth.user');
 

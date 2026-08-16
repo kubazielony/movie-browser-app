@@ -6,21 +6,21 @@ use App\Controller\AppController;
 
 class ReviewsController extends AppController
 {
-    public function index()
+    public function index(): void
     {
         $this->request->allowMethod(['get']);
 
-        $reviews = $this->fetchTable('Reviews')
+        $movies = $this->fetchTable('Movies')
             ->find()
-            ->contain(['Users', 'Movies'])
             ->all();
 
-        $this->viewBuilder()
-            ->setClassName('Json')
-            ->setOption('serialize', 'reviews');
+        $reviewsTable = $this->fetchTable('Reviews');
+
+        $user = $this->request->getSession()->read('Auth.user');
 
         $this->set([
-            'reviews' => $reviews,
+            'movies' => $movies,
+            'user' => $user,
         ]);
     }
 

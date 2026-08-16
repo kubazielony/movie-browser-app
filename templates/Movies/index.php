@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,12 +18,10 @@
             font-family: Arial, sans-serif;
 
             background:
-                radial-gradient(
-                    circle at 50% 0%,
+                radial-gradient(circle at 50% 0%,
                     #2a1014 0%,
                     #151820 35%,
-                    #0b0d12 80%
-                );
+                    #0b0d12 80%);
 
             color: #f5f5f5;
             min-height: 100vh;
@@ -246,12 +245,10 @@
             position: relative;
 
             background:
-                radial-gradient(
-                    circle at 50% 35%,
+                radial-gradient(circle at 50% 35%,
                     #3a1a1f 0%,
                     #21151a 35%,
-                    #11141b 80%
-                );
+                    #11141b 80%);
 
             color: #6b7280;
 
@@ -268,11 +265,9 @@
             inset: 0;
 
             background:
-                linear-gradient(
-                    to top,
+                linear-gradient(to top,
                     rgba(11, 13, 18, 0.7),
-                    transparent 55%
-                );
+                    transparent 55%);
         }
 
         .movie-poster span {
@@ -405,110 +400,110 @@
 
 <body>
 
-<nav class="navbar">
+    <nav class="navbar">
 
-    <a href="/" class="logo">
-        <span>🎬</span>
-        Movie Browser
-    </a>
+        <a href="/" class="logo">
+            <span>🎬</span>
+            Movie Browser
+        </a>
 
-    <div class="nav-links">
+        <div class="nav-links">
 
-        <?php if ($user): ?>
+            <?php if ($user): ?>
 
-            <span class="welcome">
-                Welcome,
-                <span class="username">
-                    <?= h($user['username']) ?>
+                <span class="welcome">
+                    Welcome,
+                    <span class="username">
+                        <?= h($user['username']) ?>
+                    </span>
                 </span>
-            </span>
 
-            <a href="/profile" class="button">
-                Profile
-            </a>
+                <a href="/profile" class="button">
+                    Profile
+                </a>
 
-            <a href="/logout" class="button button-primary">
-                Log out
-            </a>
+                <a href="/logout" class="button button-primary">
+                    Log out
+                </a>
 
-        <?php else: ?>
+            <?php else: ?>
 
-            <a href="/login" class="button">
-                Log in
-            </a>
+                <a href="/login" class="button">
+                    Log in
+                </a>
 
-            <a href="/register" class="button button-primary">
-                Sign up
-            </a>
+                <a href="/register" class="button button-primary">
+                    Sign up
+                </a>
 
-        <?php endif; ?>
+            <?php endif; ?>
 
-    </div>
+        </div>
 
-</nav>
+    </nav>
 
-<main class="container">
+    <main class="container">
 
-    <header class="page-header">
+        <header class="page-header">
 
-        <h1>
-            Movies
-        </h1>
+            <h1>
+                Movies
+            </h1>
 
-        <p>
-            Explore movies and find something worth watching.
-        </p>
+            <p>
+                Explore movies and find something worth watching.
+            </p>
 
-    </header>
+        </header>
 
-    <section class="movies-grid">
+        <section class="movies-grid">
 
-        <?php foreach ($movies as $movie): ?>
+            <?php foreach ($movies as $movie): ?>
 
-            <a
-                href="/movies/<?= h($movie->id) ?>"
-                class="movie-card"
-            >
+                <a
+                    href="/movies/<?= h($movie->id) ?>"
+                    class="movie-card">
 
-                <div class="movie-poster">
-                    <span>🎬</span>
-                </div>
+                    <div class="movie-poster">
+                        <span>🎬</span>
+                    </div>
 
-                <div class="movie-info">
+                    <div class="movie-info">
 
-                    <h2 class="movie-title">
-                        <?= h($movie->title) ?>
-                    </h2>
+                        <h2 class="movie-title">
+                            <?= h($movie->title) ?>
+                        </h2>
 
-                    <p class="movie-description">
-                        <?= h(
-                            $movie->description
-                            ?? 'No description available.'
-                        ) ?>
-                    </p>
+                        <p class="movie-description">
+                            <?= h(
+                                $movie->description
+                                    ?? 'No description available.'
+                            ) ?>
+                        </p>
 
-                    <div class="movie-details">
+                        <div class="movie-details">
 
-                        <span>
-                            <?= h($movie->year ?? '') ?>
-                        </span>
+                            <span>
+                                <?= h($movie->year ?? '') ?>
+                            </span>
 
-                        <span class="rating">
-                            ★
-                            <?= h($movie->rating ?? 'N/A') ?>
-                        </span>
+                            <span class="rating">
+                                ★
+                                <?= $movie->rating !== null ? h($movie->rating) : '-' ?>
+                            </span>
+
+                        </div>
 
                     </div>
 
-                </div>
+                </a>
 
-            </a>
+            <?php endforeach; ?>
 
-        <?php endforeach; ?>
+        </section>
 
-    </section>
-
-</main>
+    </main>
 
 </body>
+
 </html>

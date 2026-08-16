@@ -238,6 +238,14 @@
             font-size: 14px;
         }
 
+        .movie-rating {
+            font-size: 22px;
+            color: #d4a62a;
+            font-weight: normal;
+            margin-left: 12px;
+            white-space: nowrap;
+        }
+
         .review-input:focus {
             outline: none;
             border-color: #555555;
@@ -420,6 +428,10 @@
 
                 <h1 class="movie-title">
                     <?= h($movie->title) ?>
+
+                    <span class="movie-rating">
+                        ⭐ <?= $movie->rating !== null ? h($movie->rating) : '-' ?>
+                    </span>
                 </h1>
 
                 <div class="movie-meta">
