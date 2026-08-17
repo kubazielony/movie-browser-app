@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Migrations\BaseMigration;
@@ -23,6 +24,10 @@ class CreateMovies extends BaseMigration
             ->addColumn('rating', 'decimal', [
                 'precision' => 3,
                 'scale' => 1,
+                'null' => true,
+            ])
+            ->addColumn('image', 'string', [
+                'limit' => 500,
                 'null' => true,
             ])
             ->create();

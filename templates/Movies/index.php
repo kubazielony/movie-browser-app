@@ -383,6 +383,13 @@
             .movie-description {
                 font-size: 13px;
             }
+
+            .movie-poster img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
         }
 
         @media (max-width: 450px) {
@@ -464,8 +471,20 @@
                     href="/movies/<?= h($movie->id) ?>"
                     class="movie-card">
 
+
+
                     <div class="movie-poster">
-                        <span>🎬</span>
+                        <?php
+                        $imagePath = WWW_ROOT . $movie->image;
+                        ?>
+
+                        <?php if (!empty($movie->image) && file_exists($imagePath)): ?>
+                            <img
+                                src="<?= h($this->Url->build('/' . $movie->image)) ?>"
+                                alt="<?= h($movie->title) ?>">
+                        <?php else: ?>
+                            <span>🎬</span>
+                        <?php endif; ?>
                     </div>
 
                     <div class="movie-info">

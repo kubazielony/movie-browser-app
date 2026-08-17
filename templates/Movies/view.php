@@ -365,6 +365,14 @@
             .star {
                 font-size: 28px;
             }
+
+            .poster img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                border-radius: 8px;
+            }
         }
     </style>
 </head>
@@ -421,7 +429,17 @@
         <section class="movie">
 
             <div class="poster">
-                🎬
+                <?php
+                $imagePath = WWW_ROOT . $movie->image;
+                ?>
+
+                <?php if (!empty($movie->image) && file_exists($imagePath)): ?>
+                    <img
+                        src="<?= h($this->Url->build('/' . $movie->image)) ?>"
+                        alt="<?= h($movie->title) ?>">
+                <?php else: ?>
+                    <span>🎬</span>
+                <?php endif; ?>
             </div>
 
             <div class="movie-content">

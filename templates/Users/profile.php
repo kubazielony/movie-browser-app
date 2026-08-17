@@ -461,6 +461,13 @@
                 flex-direction: column;
                 gap: 8px;
             }
+
+            .review-poster img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
         }
     </style>
 </head>
@@ -568,7 +575,20 @@
                             class="review-card">
 
                             <div class="review-poster">
-                                🎬
+                                <?php
+                                $imagePath = WWW_ROOT . $review->movie->image;
+                                ?>
+
+                                <?php if (
+                                    !empty($review->movie->image)
+                                    && file_exists($imagePath)
+                                ): ?>
+                                    <img
+                                        src="<?= h($this->Url->build('/' . $review->movie->image)) ?>"
+                                        alt="<?= h($review->movie->title) ?>">
+                                <?php else: ?>
+                                    <span>🎬</span>
+                                <?php endif; ?>
                             </div>
 
 

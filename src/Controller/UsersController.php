@@ -56,6 +56,7 @@ class UsersController extends AppController
 
         if ($this->request->is('post')) {
             $data = $this->request->getData();
+            $data['username'] = trim($data['username']);
 
             $user = $users
                 ->find()
